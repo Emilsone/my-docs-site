@@ -1,0 +1,266 @@
+---
+sidebar_position: 3
+---
+
+# Tutorial
+
+## Make Your First API Call with Axios in Node.js
+
+Axios is a promise‑based HTTP client that works in both Node.js and the browser. Unlike the built‑in `fetch` API, Axios automatically parses JSON responses and provides more structured error messages. In this tutorial, you’ll install Axios and make two chained API calls:
+1. First to look up a city by name using a geocoding API.
+2. Then to fetch its live weather data and print the results to your terminal.
+
+## Prerequisites
+
+Before you start, make sure you have:
+
+- Node.js 22 or 24 (LTS) installed on your machine. To check, run:
+  ```bash
+  node -v
+  ```
+  If you don’t have Node.js yet,  follow [Set up Node.js guide](/docs/node-setup) to get everything ready. 
+- npm (comes bundled with Node.js). Confirm it’s available with:
+  ```bash
+  npm -v
+  ```
+- A terminal (Command Prompt, PowerShell, or any Unix terminal).
+- A text editor such as VS Code.
+
+No accounts, API keys, or sign‑ups are needed.
+
+## What you're building
+
+You will create a Node.js script that:
+
+1. Takes a city name as input.
+2. Uses Open‑Meteo’s free Geocoding API to look up its coordinates.
+3. Uses those coordinates with Open‑Meteo’s Weather API to fetch live temperature and wind speed.
+
+Both APIs are free and require no authentication.
+
+---
+
+## Step 1: Create your project folder
+
+Open your terminal and run the following commands one at a time:
+
+```bash
+mkdir axios-weather
+cd axios-weather
+npm init -y
+```
+
+`npm init -y` creates a `package.json` file with default settings. This file tracks your project’s dependencies.
+
+### Expected output
+
+```text
+Wrote to /Users/emilson/Downloads/axios-weather/package.json:
+{
+  "name": "axios-weather",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
+```
+
+---
+
+## Step 2: Install Axios
+
+In the same terminal, run:
+
+```bash
+npm install axios
+```
+
+This downloads Axios and adds it as a dependency in your `package.json`. It also creates a `node_modules` folder where the package files are stored.
+
+### Expected output
+
+```text
+added 27 packages, and audited 28 packages in 11s
+found 0 vulnerabilities
+```
+
+---
+
+## Step 3: Create your script
+
+In your `axios-weather` folder, create a new file called `index.js`. Paste the following code:
+
+```js
+const axios = require('axios');
+
+const city = 'Lagos';
+
+const geocodeUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1`;
+
+axios
+  .get(geocodeUrl)
+  .then(function (geoResponse) {
+    const location = geoResponse.data.results;
+    const { latitude, longitude, name, country } = location;
+
+    console.log(`Location: ${name}, ${country}`);
+
+    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,wind_speed_10m`;
+
+    return axios.get(weatherUrl);
+  })
+  .then(function (weatherResponse) {
+    const current = weatherResponse.data.current;
+
+    console.log('Temperature:', current.temperature_2m, '°C');
+    console.log('Wind speed:', current.wind_speed_10m, 'km/h');
+  })
+  .catch(function (error) {
+    console.error('Request failed:', error.message);
+  });
+```
+
+### What each part does
+
+- `city` stores the city name you want to fetch weather data for.
+- The first `axios.get()` sends a request to Open‑Meteo’s Geocoding API to get the city’s coordinates.
+- `geoResponse.data.results[0]` selects the closest matching city result.
+- `return axios.get(weatherUrl)` sends a second request using the coordinates to fetch weather data.
+- The next `.then()` handles the weather response and logs the temperature and wind speed.
+- `.catch()` handles errors from either API request.
+
+**Expected output:**  
+Nothing yet. You’ll see the output in the next step.
+
+---
+
+## Step 4: Run your script
+
+In your terminal, run:
+
+```bash
+node index.js
+```
+
+### Expected output
+
+```text
+Location: Lagos, Nigeria
+Temperature: 28.4 °C
+Wind speed: 14.2 km/h
+```
+
+The city name and country come directly from the Geocoding API response. The temperature and wind speed reflect real‑time conditions at the time you run the script.
+
+---
+
+## Step 5: Fetch weather for a different city
+
+To get the weather for a different location, update only the `city` variable at the top of your script:
+
+```js
+const city = 'Nairobi';
+```
+
+Save the file and run:
+
+```bash
+node index.js
+```
+
+### Expected output
+
+```text
+Location: Nairobi, Kenya
+Temperature: 19.1 °C
+Wind speed: 8.6 km/h
+```
+
+You only need to change one line; the rest of the script adapts automatically.
+
+---
+
+## Troubleshooting
+
+### Error 1: Cannot read properties of undefined (reading 'latitude')
+
+#### What it looks like
+
+```text
+TypeError: Cannot read properties of undefined (reading 'latitude')
+```
+
+#### Why it happens
+
+The Geocoding API returned no results for the city name you provided. This happens when the city name is misspelled, too vague, or not in the API’s database.
+
+#### Fix
+
+- Check the spelling of your `city` variable.
+- Try a more specific name (for example, use `'Port Harcourt'` instead of `'PH'`).
+- You can also test the geocoding URL directly in your browser:
+
+  https://geocoding-api.open-meteo.com/v1/search?name=Lagos&count=1
+
+  If the results are empty or missing, the city name was not found by the API.
+
+---
+
+### Error 2: Cannot find module 'axios'
+
+#### What it looks like
+
+```text
+Error: Cannot find module 'axios'
+```
+
+#### Why it happens
+
+Node.js cannot locate the Axios package. This usually means:
+
+- `npm install axios` was never run, or
+- It was run in a different folder from where your `index.js` file is.
+
+#### Fix
+
+- Make sure your terminal is inside the `axios-weather` folder. Run:
+  ```bash
+  pwd
+  ```
+  on Mac/Linux or check `cd` on Windows.
+- Then run:
+  ```bash
+  npm install axios
+  ```
+
+---
+
+### Error 3: Request failed: getaddrinfo ENOTFOUND
+
+#### What it looks like
+
+```text
+Request failed: getaddrinfo ENOTFOUND geocoding-api.open-meteo.com
+```
+
+#### Why it happens
+
+Node.js could not resolve the domain name. This almost always means:
+
+- There is no internet connection, or
+- One of the URLs in your script contains a typo.
+
+#### Fix
+
+- Check your internet connection.
+- Confirm that both URLs in your script use the correct domains:
+  - `geocoding-api.open-meteo.com` for the geocoding call.
+  - `api.open-meteo.com` for the weather call.
+
+They are different subdomains and must not be mixed up.
