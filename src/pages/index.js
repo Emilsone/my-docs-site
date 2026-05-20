@@ -54,7 +54,6 @@ function LearnSection() {
             in the tutorial, with request examples and response breakdowns.
           </p>
           <ul className={styles.learnList}>
-            <li>Authentication and personal access tokens</li>
             <li>GET /users/&#123;username&#125; — fetch a user profile</li>
             <li>GET /repos/&#123;owner&#125;/&#123;repo&#125; — fetch a repository</li>
             <li>Rate limits and error responses</li>

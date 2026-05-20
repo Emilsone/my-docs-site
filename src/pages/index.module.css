@@ -101,6 +101,7 @@
 
 .btnOutline:hover {
   background: var(--ifm-color-primary-lightest);
+  color: white;
   text-decoration: none;
 }
 

@@ -8,22 +8,22 @@ const FeatureList = [
     icon: '🚀',
     title: 'Set up a Node.js project',
     description: 'Install Node.js and Axios, and structure a basic project ready to make API calls.',
-    cta: 'Go to tutorial',
+    cta: 'Setup Node',
     ctaLink: '/docs/node-setup',
   },
   {
-    icon: '📡',
+    icon: '🤖',
     title: 'Make your first API call',
     description: 'Send a GET request to a live API endpoint and handle the response using Axios.',
-    cta: 'Go to tutorial',
+    cta: 'Make API Call',
     ctaLink: '/docs/tutorial',
   },
   {
     icon: '🐙',
     title: 'Understand the GitHub API',
-    description: "Explore GitHub's REST API — repositories, users, issues, and authentication.",
+    description: "Explore GitHub's REST API, repositories, users, issues, and authentication.",
     cta: 'View reference',
-    ctaLink: '/docs/intro',
+    ctaLink: '/docs/api-reference',
   },
 ];
 

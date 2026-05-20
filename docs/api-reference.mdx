@@ -1,0 +1,198 @@
+
+# API Reference 
+
+## GitHub REST API
+
+**Base URL:** `https://api.github.com`
+
+---
+
+## Endpoint 1 — Get a Repository
+
+**HTTP Method:** `GET`
+
+**URL:** `https://api.github.com/repos/Emilsone/Nasa-image`
+
+**Description:** Returns detailed information about a single public GitHub repository, including its name, description, default branch, star count, fork count, open issue count, and visibility.
+
+### Parameters
+
+| Name  | In   | Type   | Required | Description                                                  |
+| ----- | ---- | ------ | -------- | ------------------------------------------------------------ |
+| owner | path | string | required | The username or organisation that owns the repository        |
+| repo  | path | string | required | The exact name of the repository                             |
+
+### Example Request
+
+```http
+GET https://api.github.com/repos/Emilsone/Nasa-image
+```
+
+### Example Response (200 OK)
+
+```json
+{
+  "id": 615763180,
+  "node_id": "R_kgDOJLPM7A",
+  "name": "Nasa-image",
+  "full_name": "Emilsone/Nasa-image",
+  "private": false,
+  "owner": {
+    "login": "Emilsone",
+    "id": 48225057,
+    "node_id": "MDQ6VXNlcjQ4MjI1MDU3",
+    "avatar_url": "https://avatars.githubusercontent.com/u/48225057?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/Emilsone",
+    "html_url": "https://github.com/Emilsone",
+    "followers_url": "https://api.github.com/users/Emilsone/followers",
+    "following_url": "https://api.github.com/users/Emilsone/following{/other_user}",
+    "gists_url": "https://api.github.com/users/Emilsone/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/Emilsone/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/Emilsone/subscriptions",
+    "organizations_url": "https://api.github.com/users/Emilsone/orgs",
+    "repos_url": "https://api.github.com/users/Emilsone/repos",
+    "events_url": "https://api.github.com/users/Emilsone/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/Emilsone/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  }
+}
+```
+
+### Postman Test Evidence
+
+![Postman test evidence for Get a Repository endpoint](/img/postman-get-repo.png)
+
+
+### Error Codes
+
+| Code | Name               | Meaning                                          |
+| ---- | ------------------ | ------------------------------------------------ |
+| 200  | OK                 | Request successful. The server has responded as required. |
+| 301  | Moved Permanently  | Repository or user has been renamed/transferred. |
+| 403  | Forbidden          | You don't have permission to access it.          |
+| 404  | Not Found          | Repository doesn't exist.                        |
+
+---
+
+## Endpoint 2 — List Public Repositories for a User
+
+**HTTP Method:** `GET`
+
+**URL:** `https://api.github.com/users/Emilsone/repos?sort=updated&per_page=5`
+
+**Description:** Returns a list of public repositories owned by a specific GitHub user. Supports sorting and pagination.
+
+### Parameters
+
+| Name     | In    | Type    | Required | Description                                                                          |
+| -------- | ----- | ------- | -------- | ------------------------------------------------------------------------------------ |
+| username | path  | string  | required | The GitHub username whose repos to list                                              |
+| sort     | query | string  | optional | Sort by: `created`, `updated`, `pushed`, `full_name`. Default: `full_name`           |
+| per_page | query | integer | optional | Page number of results to return. Default: `1`                                       |
+
+### Example Request
+
+```http
+GET https://api.github.com/users/Emilsone/repos?sort=updated&per_page=5
+```
+
+### Example Response (200 OK)
+
+```json
+{
+  "login": "Emilsone",
+  "id": 48225057,
+  "node_id": "MDQ6VXNlcjQ4MjI1MDU3",
+  "avatar_url": "https://avatars.githubusercontent.com/u/48225057?v=4",
+  "gravatar_id": "",
+  "url": "https://api.github.com/users/Emilsone",
+  "html_url": "https://github.com/Emilsone",
+  "followers_url": "https://api.github.com/users/Emilsone/followers",
+  "following_url": "https://api.github.com/users/Emilsone/following{/other_user}",
+  "gists_url": "https://api.github.com/users/Emilsone/gists{/gist_id}",
+  "starred_url": "https://api.github.com/users/Emilsone/starred{/owner}{/repo}",
+  "subscriptions_url": "https://api.github.com/users/Emilsone/subscriptions",
+  "organizations_url": "https://api.github.com/users/Emilsone/orgs",
+  "repos_url": "https://api.github.com/users/Emilsone/repos",
+  "events_url": "https://api.github.com/users/Emilsone/events{/privacy}",
+  "received_events_url": "https://api.github.com/users/Emilsone/received_events",
+  "type": "User",
+  "user_view_type": "public",
+  "site_admin": false,
+  "name": "Ezekiel Lawson"
+}
+```
+
+### Postman Test Evidence
+
+![Postman test evidence for List Public Repositories endpoint](/img/postman-list-repos.png)
+
+### Error Codes
+
+| Code | Name      | Meaning                                          |
+| ---- | --------- | ------------------------------------------------ |
+| 200  | OK        | Request successful. The server has responded as required. |
+| 404  | Not Found | Repositories don't exist.                        |
+
+---
+
+## Endpoint 3 — Get a User
+
+**HTTP Method:** `GET`
+
+**URL:** `https://api.github.com/users/Emilsone`
+
+**Description:** Returns public information about a GitHub user, including their display name, bio, follower count, and public repository count.
+
+### Parameters
+
+| Name     | In   | Type   | Required | Description                                      |
+| -------- | ---- | ------ | -------- | ------------------------------------------------ |
+| username | path | string | required | The GitHub username of the account to retrieve   |
+
+### Example Request
+
+```http
+GET https://api.github.com/users/Emilsone
+```
+
+### Example Response (200 OK)
+
+```json
+{
+  "login": "Emilsone",
+  "id": 48225057,
+  "node_id": "MDQ6VXNlcjQ4MjI1MDU3",
+  "avatar_url": "https://avatars.githubusercontent.com/u/48225057?v=4",
+  "gravatar_id": "",
+  "url": "https://api.github.com/users/Emilsone",
+  "html_url": "https://github.com/Emilsone",
+  "followers_url": "https://api.github.com/users/Emilsone/followers",
+  "following_url": "https://api.github.com/users/Emilsone/following{/other_user}",
+  "gists_url": "https://api.github.com/users/Emilsone/gists{/gist_id}",
+  "starred_url": "https://api.github.com/users/Emilsone/starred{/owner}{/repo}",
+  "subscriptions_url": "https://api.github.com/users/Emilsone/subscriptions",
+  "organizations_url": "https://api.github.com/users/Emilsone/orgs",
+  "repos_url": "https://api.github.com/users/Emilsone/repos",
+  "events_url": "https://api.github.com/users/Emilsone/events{/privacy}",
+  "received_events_url": "https://api.github.com/users/Emilsone/received_events",
+  "type": "User",
+  "user_view_type": "public",
+  "site_admin": false,
+  "name": "Ezekiel Lawson"
+}
+```
+
+### Postman Test Evidence
+
+![Postman test evidence for Get a User endpoint](/img/postman-get-user.png)
+
+### Error Codes
+
+| Code | Name      | Meaning                                          |
+| ---- | --------- | ------------------------------------------------ |
+| 200  | OK        | Request successful. The server has responded as required. |
+| 404  | Not Found | Username or repo doesn't exist.                  |
