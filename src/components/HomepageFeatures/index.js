@@ -4,13 +4,7 @@ import Link from '@docusaurus/Link';
 import styles from './styles.module.css';
 
 const FeatureList = [
-  {
-    icon: '🚀',
-    title: 'Set up a Node.js project',
-    description: 'Install Node.js and Axios, and structure a basic project ready to make API calls.',
-    cta: 'Setup Node',
-    ctaLink: '/docs/node-setup',
-  },
+ 
   {
     icon: '🤖',
     title: 'Make your first API call',
@@ -29,7 +23,8 @@ const FeatureList = [
 
 function FeatureCard({icon, title, description, cta, ctaLink}) {
   return (
-    <div className={clsx('col col--4')}>
+    
+    <div className={clsx('col col--6')}>
       <div className={styles.featureCard}>
         <div className={styles.featureIcon}>{icon}</div>
         <Heading as="h3" className={styles.featureTitle}>{title}</Heading>
