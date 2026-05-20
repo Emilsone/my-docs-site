@@ -92,13 +92,13 @@ const config = {
         items: [
         
           {
-            type: 'docSidebar',
+            to: '/docs/tutorial',
             sidebarId: 'tutorialSidebar',
             position: 'left',
             label: 'Tutorial',
           },
           {
-            type: 'docSidebar',
+            to: '/docs/api-reference',
             sidebarId: 'tutorialSidebar',
             position: 'left',
             label: 'API Reference',
