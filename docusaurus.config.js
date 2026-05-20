@@ -4,7 +4,7 @@
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
-import {themes as prismThemes} from 'prism-react-renderer';
+import { themes as prismThemes } from 'prism-react-renderer';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -19,17 +19,17 @@ const config = {
     v4: true, // Improve compatibility with the upcoming Docusaurus v4
   },
 
-   // Set the production url of your site here
-   url: 'https://emilsone.github.io',
-   // Set the /<baseUrl>/ pathname under which your site is served
-   // For GitHub pages deployment, it is often '/<projectName>/'
-   baseUrl: '/my-docs-site/',
- 
-   // GitHub pages deployment config.
-   // If you aren't using GitHub pages, you don't need these.
-   organizationName: 'emilsone', 
-   projectName: 'my-docs-site', 
-   deploymentBranch: 'gh-pages', 
+  // Set the production url of your site here
+  url: 'https://emilsone.github.io',
+  // Set the /<baseUrl>/ pathname under which your site is served
+  // For GitHub pages deployment, it is often '/<projectName>/'
+  baseUrl: '/my-docs-site/',
+
+  // GitHub pages deployment config.
+  // If you aren't using GitHub pages, you don't need these.
+  organizationName: 'emilsone',
+  projectName: 'my-docs-site',
+  deploymentBranch: 'gh-pages',
 
   onBrokenLinks: 'throw',
 
@@ -90,15 +90,22 @@ const config = {
           src: 'img/logo.svg',
         },
         items: [
+        
           {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
             position: 'left',
             label: 'Tutorial',
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
           {
-            href: 'https://github.com/facebook/docusaurus',
+            type: 'docSidebar',
+            sidebarId: 'tutorialSidebar',
+            position: 'left',
+            label: 'API Reference',
+          },
+          // { to: '/blog', label: 'Blog', position: 'left' },
+          {
+            href: 'https://github.com/Emilsone/my-docs-site',
             label: 'GitHub',
             position: 'right',
           },
